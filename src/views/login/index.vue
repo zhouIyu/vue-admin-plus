@@ -86,7 +86,10 @@ export default defineComponent({
        scoped>
 .vap-container_login {
     width: 300px;
-    margin: 100px auto 0;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
 
     &-submit {
         width: 100%;
