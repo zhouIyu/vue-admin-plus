@@ -4,7 +4,7 @@
         <el-menu
             :uniqueOpened="true"
             :default-active="activeIndex"
-            :collapse="collapse"
+            :collapse="useCollapse"
             class="vap-container_aside-menu"
             :background-color="layoutStyle.menuBackground"
             :text-color="layoutStyle.menuText"
@@ -60,22 +60,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRefs } from 'vue';
+import { defineComponent, ref, computed, inject, Ref } from 'vue';
 import layoutStyle from '@/styles/layout.scss';
 
 export default defineComponent({
     name: 'VapAside',
-    props: {
-        collapse: {
-            type: Boolean,
-            default: false
-        }
-    },
-    setup (props) {
+    setup () {
         const activeIndex = ref<string>('1-1');
-        const { collapse } = toRefs(props);
+        const useCollapse: Ref<boolean> = inject('collapse', ref(false));
         const collapseWidth = computed(() => {
-            if (collapse.value) {
+            if (useCollapse.value) {
                 return '65px';
             }
             return '200px';
@@ -84,6 +78,7 @@ export default defineComponent({
         return {
             activeIndex,
             collapseWidth,
+            useCollapse,
             layoutStyle
         };
     }

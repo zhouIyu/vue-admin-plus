@@ -7,28 +7,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs } from 'vue';
+import { computed, defineComponent, inject, ref, Ref } from 'vue';
 
 export default defineComponent({
     name: 'VapHeader',
-    props: {
-        collapse: {
-            type: Boolean,
-            default: false
-        },
-        triggerCollapse: {
-            type: Function
-        }
-    },
-    setup (props, { emit }) {
-        const { collapse } = toRefs(props);
-
+    setup () {
+        const useCollapse: Ref<boolean> = inject('collapse', ref(false));
+        const triggerCollapse = inject('triggerCollapse');
         const collapseIconClass = computed(() => {
-            return collapse.value ? 'el-icon-s-unfold' : 'el-icon-s-fold';
+            return useCollapse.value ? 'el-icon-s-unfold' : 'el-icon-s-fold';
         });
 
         return {
-            collapseIconClass
+            collapseIconClass,
+            triggerCollapse
         };
     }
 });
