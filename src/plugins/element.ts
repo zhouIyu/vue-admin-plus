@@ -13,7 +13,11 @@ import {
     ElMenu,
     ElMenuItem,
     ElMenuItemGroup,
-    ElSubmenu
+    ElSubmenu,
+    ElDropdown,
+    ElDropdownItem,
+    ElDropdownMenu,
+    ElAvatar
 } from 'element-plus';
 import lang from 'element-plus/lib/locale/lang/zh-cn';
 import locale from 'element-plus/lib/locale';
@@ -31,7 +35,11 @@ const components = [
     ElMenu,
     ElMenuItem,
     ElSubmenu,
-    ElMenuItemGroup
+    ElMenuItemGroup,
+    ElDropdown,
+    ElDropdownItem,
+    ElDropdownMenu,
+    ElAvatar
 ];
 
 export default (app: App) => {

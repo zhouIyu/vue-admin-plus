@@ -1,33 +1,54 @@
+$--header-height: 60px;
+$--header-background-color: #fff;
+$--main-background-color: #fcfcfc;
+$--border-color: #ddd;
 $--menu-background-color: #545c64;
 $--menu-text-color: #fff;
 $--menu-active-text-color: #ffd04b;
+$--menu-height: calc(100% - 60px);
+
 
 .vap-container {
-
     &_aside {
         background: $--menu-background-color;
+        overflow: hidden;
 
         &-menu {
-            height: 100%;
+            height: $--menu-height;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            }
         }
     }
 
     &_header {
-        background: #fff;
-        border-bottom: 1px solid #ddd;
-        box-shadow: 2px 2px 5px #ddd;
+        background: $--header-background-color;
+        border-bottom: 1px solid $--border-color;
+        box-shadow: 2px 2px 5px $--border-color;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
     &_main {
-        background: #fcfcfc;
+        background: $--main-background-color;
     }
+
+    &_footer {
+        background: $--main-background-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
 }
 
 :export {
     menuBackground: $--menu-background-color;
     menuText: $--menu-text-color;
     menuActiveText: $--menu-active-text-color;
+    headerHeight: $--header-height;
 }
