@@ -17,7 +17,11 @@ import {
     ElDropdown,
     ElDropdownItem,
     ElDropdownMenu,
-    ElAvatar
+    ElAvatar,
+    ElBreadcrumb,
+    ElBreadcrumbItem,
+    ElRow,
+    ElCol
 } from 'element-plus';
 import lang from 'element-plus/lib/locale/lang/zh-cn';
 import locale from 'element-plus/lib/locale';
@@ -39,13 +43,17 @@ const components = [
     ElDropdown,
     ElDropdownItem,
     ElDropdownMenu,
-    ElAvatar
+    ElAvatar,
+    ElBreadcrumb,
+    ElBreadcrumbItem,
+    ElRow,
+    ElCol
 ];
 
 export default (app: App) => {
     locale.use(lang);
     app.config.globalProperties.$message = ElMessage;
-    components.forEach(component => {
+    components.forEach((component: any) => {
         app.use(component);
     });
 };
