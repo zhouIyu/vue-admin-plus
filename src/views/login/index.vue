@@ -30,6 +30,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, unref, getCurrentInstance } from 'vue';
+import { useRouter } from 'vue-router';
 
 interface ModelRef {
     username: string;
@@ -57,6 +58,7 @@ export default defineComponent({
             }]
         };
         const { ctx }: any = getCurrentInstance();
+        const router = useRouter();
         const submitForm = async () => {
             const form: any = unref(formRef);
             if (!form) return false;
@@ -67,6 +69,8 @@ export default defineComponent({
                         password
                     } = userForm;
                     console.log(username, password);
+                    ctx.$message.success('登录成功');
+                    router.replace('/');
                 } else {
                     ctx.$message.error('用户名或密码错误');
                 }

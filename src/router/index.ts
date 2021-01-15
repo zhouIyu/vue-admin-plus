@@ -5,17 +5,20 @@ import Layout from '@/layout/index.vue';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        redirect: '/home'
+        redirect: '/dashboard',
+        component: Layout,
+        children: [
+            {
+                path: 'dashboard',
+                name: 'Dashboard',
+                component: () => import('@/views/dashboard/index.vue')
+            }
+        ]
     },
     {
         path: '/login',
         name: 'Login',
         component: Login
-    },
-    {
-        path: '/home',
-        name: 'Home',
-        component: Layout
     }
 ];
 

@@ -4,7 +4,7 @@
         <el-container direction="vertical">
             <vap-header/>
             <el-main class="vap-container_main">
-                主题内容
+                <router-view/>
             </el-main>
             <vap-footer/>
         </el-container>

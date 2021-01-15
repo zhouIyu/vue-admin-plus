@@ -37,8 +37,8 @@ export default defineComponent({
     justify-content: center;
 
     &-img {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
     }
 
     &-title {
