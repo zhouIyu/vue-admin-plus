@@ -31,17 +31,13 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, unref, getCurrentInstance } from 'vue';
 import { useRouter } from 'vue-router';
-
-interface ModelRef {
-    username: string;
-    password: string;
-}
+import { Login } from '@/api/user';
 
 export default defineComponent({
     name: 'Login',
     setup () {
         const formRef = ref(null);
-        const userForm: ModelRef = reactive({
+        const userForm: Login = reactive({
             username: '',
             password: ''
         });

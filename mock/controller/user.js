@@ -21,7 +21,7 @@ module.exports = [
                 code: 200,
                 msg: 'success',
                 data: {
-                    token: accessToken
+                    accessToken
                 }
             };
         }
