@@ -5,7 +5,7 @@ const chokidar = require('chokidar');
 const bodyParser = require('body-parser');
 const getJsonFiles = require('./utils/getJsonFiles');
 const mockDir = path.join(process.cwd(), 'mock');
-const baseURL = 'http://localhost:8888';
+const baseURL = 'mock-server';
 
 const responseFake = (url, type, respond) => {
     return {
@@ -28,10 +28,12 @@ const responseFake = (url, type, respond) => {
 
 const loadFiles = () => {
     const files = getJsonFiles('mock/controller');
-    return files.map(item => {
+    const list = [];
+    files.forEach(item => {
         const obj = require(item);
-        return [...obj];
+        list.push(...obj);
     });
+    return list;
 };
 
 const registerRoutes = (app) => {
