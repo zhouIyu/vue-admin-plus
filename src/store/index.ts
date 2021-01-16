@@ -1,8 +1,17 @@
 import { createStore } from 'vuex';
 import user from './modules/user';
+import menus from './modules/menus';
+import { App } from 'vue';
 
-export default createStore({
+const store = createStore({
     modules: {
-        user
+        user,
+        menus
     }
 });
+
+export function loadStore (app: App) {
+    app.use(store);
+}
+
+export default store;

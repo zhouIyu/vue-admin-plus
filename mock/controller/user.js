@@ -9,7 +9,7 @@ module.exports = [
         url: '/login',
         type: 'post',
         response (config) {
-            const username = config.body;
+            const { username } = config.body;
             const accessToken = accessTokens[username];
             if (!accessToken) {
                 return {

@@ -1,52 +1,44 @@
-import { ActionContext } from 'vuex';
+import { Module } from 'vuex';
 import { login, Login } from '@/api/user';
 import { setAccessToken, getAccessToken } from '@/utils/token';
 
-interface UserState {
-    accessToken: string;
-    username: string;
-    avatar: string;
-}
-
-const state: () => UserState = () => ({
+const state = {
     accessToken: getAccessToken(),
     username: '',
     avatar: ''
-});
-
-const getters = {
-    accessToken: (state: UserState) => state.accessToken,
-    username: (state: UserState) => state.username,
-    avatar: (state: UserState) => state.avatar
 };
 
-const mutations = {
-    setAccessToken (state: UserState, token: string) {
-        state.accessToken = token;
-        setAccessToken(token);
-    },
-    setUsername (state: UserState, username: string) {
-        state.username = username;
-    },
-    setAvatar (state: UserState, avatar: string) {
-        state.avatar = avatar;
-    }
-};
+export type UserStateType = typeof state;
 
-const actions = {
-    async login (ctx: ActionContext<UserState, unknown>, body: Login) {
-        const { data }: any = await login(body);
-        const { accessToken } = data;
-        if (accessToken) {
-            ctx.commit('setAccessToken', accessToken);
+const user: Module<UserStateType, any> = {
+    namespaced: true,
+    state,
+    getters: {
+        accessToken: (state1) => state1.accessToken
+    },
+    mutations: {
+        setAccessToken (state, token: string) {
+            state.accessToken = token;
+            setAccessToken(token);
+        },
+        setUsername (state, username: string) {
+            state.username = username;
+        },
+        setAvatar (state, avatar: string) {
+            state.avatar = avatar;
+        }
+    },
+    actions: {
+        async login ({ commit }, body: Login) {
+            const { data }: any = await login(body);
+            const { accessToken } = data;
+            if (accessToken) {
+                commit('setAccessToken', accessToken);
+                return true;
+            }
+            return false;
         }
     }
 };
 
-export default {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions
-};
+export default user;

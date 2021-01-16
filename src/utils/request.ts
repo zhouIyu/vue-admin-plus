@@ -1,6 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ElMessage } from 'element-plus';
 
-const instance = axios.create();
+const instance = axios.create({
+    baseURL: 'mock-server'
+});
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
     return config;
@@ -9,7 +12,12 @@ instance.interceptors.request.use((config: AxiosRequestConfig) => {
 });
 
 instance.interceptors.response.use((response: AxiosResponse) => {
-    return response;
+    const data = response.data;
+    if (data.code === 200) {
+        return data;
+    } else {
+        ElMessage.error(data.msg);
+    }
 }, error => {
     return Promise.reject(error);
 });

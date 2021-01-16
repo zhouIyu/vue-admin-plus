@@ -1,50 +1,51 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Login from '@/views/login/index.vue';
+import { App } from 'vue';
+import createRouterGuards from '@/router/permissions';
 import Layout from '@/layout/index.vue';
+import vapRoutes from '@/router/moduels/vap';
+import { notFound } from '@/router/moduels/error';
 
-const routes: Array<RouteRecordRaw> = [
+export const constantRoutes: RouteRecordRaw[] = [
     {
         path: '/',
         redirect: '/dashboard',
         component: Layout,
+        meta: {
+            hidden: false
+        },
         children: [
             {
                 path: 'dashboard',
                 name: 'Dashboard',
                 meta: {
-                    title: 'Dashboard'
+                    title: 'Dashboard',
+                    icon: 'el-icon-s-home'
                 },
                 component: () => import('@/views/dashboard/index.vue')
             }
         ]
     },
     {
-        path: '/vap',
-        redirect: '/vap/vapIndex',
-        name: 'Vap',
-        meta: {
-            title: '组件'
-        },
-        component: Layout,
-        children: [{
-            path: 'vapIndex',
-            name: 'VapIndex',
-            meta: {
-                title: '组件1'
-            },
-            component: () => import('@/views/vap/index.vue')
-        }]
-    },
-    {
+
         path: '/login',
         name: 'Login',
-        component: Login
-    }
+        meta: {
+            hidden: true
+        },
+        component: () => import('@/views/login/index.vue')
+    },
+    ...vapRoutes,
+    { ...notFound }
 ];
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes: constantRoutes
 });
+
+export function loadRoutes (app: App) {
+    app.use(router);
+    createRouterGuards(router);
+}
 
 export default router;

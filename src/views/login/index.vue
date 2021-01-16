@@ -29,8 +29,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, unref, getCurrentInstance } from 'vue';
+import { defineComponent, reactive, ref, unref, toRaw, getCurrentInstance } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import { Login } from '@/api/user';
 
 export default defineComponent({
@@ -55,18 +56,17 @@ export default defineComponent({
         };
         const { ctx }: any = getCurrentInstance();
         const router = useRouter();
+        const store = useStore();
         const submitForm = async () => {
             const form: any = unref(formRef);
             if (!form) return false;
-            form.validate((valid: boolean) => {
+            form.validate(async (valid: boolean) => {
                 if (valid) {
-                    const {
-                        username,
-                        password
-                    } = userForm;
-                    console.log(username, password);
-                    ctx.$message.success('登录成功');
-                    router.replace('/');
+                    const result = await store.dispatch('user/login', toRaw(userForm));
+                    if (result) {
+                        ctx.$message.success('登录成功');
+                        await router.replace('/');
+                    }
                 } else {
                     ctx.$message.error('用户名或密码错误');
                 }
