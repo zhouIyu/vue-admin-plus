@@ -10,18 +10,11 @@
             :background-color="layoutStyle.menuBackground"
             :text-color="layoutStyle.menuText"
             :active-text-color="layoutStyle.menuActiveText"
-            :collapse-transition="false">
-            <el-menu-item index="1">
-                <i class="el-icon-s-home"></i>
-                <template #title>Dashboard</template>
-            </el-menu-item>
-            <el-submenu index="2">
-                <template #title>
-                    <i class="el-icon-menu"></i>
-                    <span>组件</span>
-                </template>
-                <el-menu-item index="1-1">选项3</el-menu-item>
-            </el-submenu>
+            :collapse-transition="false"
+            :router="true">
+            <vap-side-item v-for="item in menus"
+                           :menu-item="item"
+                           :key="item.name"/>
         </el-menu>
     </el-aside>
 </template>
@@ -30,12 +23,15 @@
 import { defineComponent, ref, computed, inject, Ref } from 'vue';
 import layoutStyle from '@/styles/layout.scss';
 import VapLogo from '@/layout/vap-logo/index.vue';
+import { useStore } from 'vuex';
+import VapSideItem from '@/layout/vap-aside/side-item.vue';
 
 export default defineComponent({
     name: 'VapAside',
-    components: { VapLogo },
+    components: { VapSideItem, VapLogo },
     setup () {
-        const activeIndex = ref<string>('1-1');
+        const store = useStore();
+        const activeIndex = ref<string>('/dashboard');
         const useCollapse: Ref<boolean> = inject('collapse', ref(false));
         const collapseWidth = computed(() => {
             if (useCollapse.value) {
@@ -44,11 +40,14 @@ export default defineComponent({
             return '200px';
         });
 
+        const menus = store.getters['menus/menus'];
+
         return {
             activeIndex,
             collapseWidth,
             useCollapse,
-            layoutStyle
+            layoutStyle,
+            menus
         };
     }
 });
