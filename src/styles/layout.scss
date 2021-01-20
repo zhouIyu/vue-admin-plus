@@ -1,6 +1,6 @@
 $--header-height: 60px;
 $--header-background-color: #fff;
-$--main-background-color: #fcfcfc;
+$--main-background-color: #f1f1f1;
 $--border-color: #ddd;
 $--menu-background-color: #545c64;
 $--menu-text-color: #fff;
@@ -32,6 +32,15 @@ $--menu-height: calc(100% - 60px);
 
     &_main {
         background: $--main-background-color;
+        overflow-y: auto;
+
+        &-wrapper {
+            min-height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #fff;
+
+        }
     }
 
     &_footer {

@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { Meta } from '@/router/type';
+import { Meta } from '@/types/router';
 
 const filterRoutes = (routes: RouteRecordRaw[]) => {
     const list = routes.filter(router => {
@@ -19,7 +19,6 @@ const filterRoutes = (routes: RouteRecordRaw[]) => {
             });
         }
     });
-    console.log(menus);
     return menus;
 };
 

@@ -1,24 +1,16 @@
-# vue-admin-plus
+# Vue Admin Plus
 
-## Project setup
-```
-yarn install
-```
+## TODO List
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+### v1.0
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [ ] 登录
+- [ ] 首页看板
+- [ ] 系统管理
+  - [ ] 用户管理
+  - [ ] 角色管理
+  - [ ] 菜单管理
+- [ ] 常用组件
+  - [ ] Table
+  - [ ] Form
+- [ ] 错误页面

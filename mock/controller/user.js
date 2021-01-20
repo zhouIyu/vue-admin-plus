@@ -25,5 +25,19 @@ module.exports = [
                 }
             };
         }
+    },
+    {
+        url: '/getUserList',
+        type: 'get',
+        response () {
+            return {
+                code: 200,
+                msg: 'success',
+                data: {
+                    total: 0,
+                    list: []
+                }
+            };
+        }
     }
 ];

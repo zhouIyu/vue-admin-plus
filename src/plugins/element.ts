@@ -21,7 +21,9 @@ import {
     ElBreadcrumb,
     ElBreadcrumbItem,
     ElRow,
-    ElCol
+    ElCol,
+    ElTable,
+    ElTableColumn
 } from 'element-plus';
 import lang from 'element-plus/lib/locale/lang/zh-cn';
 import locale from 'element-plus/lib/locale';
@@ -47,7 +49,9 @@ const components = [
     ElBreadcrumb,
     ElBreadcrumbItem,
     ElRow,
-    ElCol
+    ElCol,
+    ElTable,
+    ElTableColumn
 ];
 
 export default (app: App) => {

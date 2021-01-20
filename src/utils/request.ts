@@ -1,25 +1,19 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ElMessage } from 'element-plus';
+import { ResponseData } from '@/types/response';
+import _ from 'lodash';
 
 const instance = axios.create({
     baseURL: 'mock-server'
 });
 
-instance.interceptors.request.use((config: AxiosRequestConfig) => {
-    return config;
-}, error => {
-    return Promise.reject(error);
-});
+const request = (config: AxiosRequestConfig): Promise<ResponseData> => {
+    const conf: AxiosRequestConfig = _.cloneDeep(config);
+    return new Promise((resolve) => {
+        instance.request<any, AxiosResponse<ResponseData>>(conf)
+            .then((res) => {
+                resolve(res.data);
+            });
+    });
+};
 
-instance.interceptors.response.use((response: AxiosResponse) => {
-    const data = response.data;
-    if (data.code === 200) {
-        return data;
-    } else {
-        ElMessage.error(data.msg);
-    }
-}, error => {
-    return Promise.reject(error);
-});
-
-export default instance;
+export default request;

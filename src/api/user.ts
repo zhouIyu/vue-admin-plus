@@ -5,6 +5,17 @@ export interface Login {
     password: string;
 }
 
-export const login = async (body: Login) => {
-    return request.post('/login', body);
+export const login = (body: Login) => {
+    return request({
+        url: '/login',
+        method: 'POST',
+        data: body
+    });
+};
+
+export const getUserList = () => {
+    return request({
+        url: '/getUserList',
+        method: 'GET'
+    });
 };

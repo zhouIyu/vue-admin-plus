@@ -3,7 +3,8 @@ import { App } from 'vue';
 import createRouterGuards from '@/router/permissions';
 import Layout from '@/layout/index.vue';
 import vapRoutes from '@/router/moduels/vap';
-import { notFound } from '@/router/moduels/error';
+import errorRoutes, { notFound } from '@/router/moduels/error';
+import systemRoutes from '@/router/moduels/system';
 
 export const constantRoutes: RouteRecordRaw[] = [
     {
@@ -34,7 +35,9 @@ export const constantRoutes: RouteRecordRaw[] = [
         },
         component: () => import('@/views/login/index.vue')
     },
-    ...vapRoutes,
+    { ...vapRoutes },
+    { ...errorRoutes },
+    { ...systemRoutes },
     { ...notFound }
 ];
 

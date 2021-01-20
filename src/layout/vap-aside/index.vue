@@ -20,17 +20,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, inject, Ref } from 'vue';
+import { defineComponent, ref, computed, inject, Ref, watchEffect } from 'vue';
 import layoutStyle from '@/styles/layout.scss';
 import VapLogo from '@/layout/vap-logo/index.vue';
 import { useStore } from 'vuex';
 import VapSideItem from '@/layout/vap-aside/side-item.vue';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
     name: 'VapAside',
     components: { VapSideItem, VapLogo },
     setup () {
         const store = useStore();
+        const route = useRoute();
         const activeIndex = ref<string>('/dashboard');
         const useCollapse: Ref<boolean> = inject('collapse', ref(false));
         const collapseWidth = computed(() => {
@@ -38,6 +40,10 @@ export default defineComponent({
                 return '65px';
             }
             return '200px';
+        });
+
+        watchEffect(() => {
+            activeIndex.value = route.path;
         });
 
         const menus = store.getters['menus/menus'];
