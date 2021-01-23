@@ -1,4 +1,4 @@
-const tokenName = 'xxxx-xxx';
+const tokenName = 'vue-admin-plus';
 
 export const getAccessToken: () => string = (): string => {
     return localStorage.getItem(tokenName) || '';

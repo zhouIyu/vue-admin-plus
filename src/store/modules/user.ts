@@ -1,6 +1,8 @@
 import { Module } from 'vuex';
-import { login, Login } from '@/api/user';
-import { setAccessToken, getAccessToken } from '@/utils/token';
+import { login } from '@/api/user';
+import { setAccessToken, getAccessToken, removeAccessToken } from '@/utils/token';
+import { BaseUser } from '@/types/data';
+import { ResponseData } from '@/types/response';
 
 const state = {
     accessToken: getAccessToken(),
@@ -29,14 +31,18 @@ const user: Module<UserStateType, any> = {
         }
     },
     actions: {
-        async login ({ commit }, body: Login) {
-            const { data }: any = await login(body);
-            const { accessToken } = data;
-            if (accessToken) {
-                commit('setAccessToken', accessToken);
+        async login ({ commit }, body: BaseUser) {
+            const { data }: ResponseData = await login(body);
+            const { token } = data;
+            if (token) {
+                commit('setAccessToken', token);
                 return true;
             }
             return false;
+        },
+        restoreToken ({ commit }) {
+            removeAccessToken();
+            commit('setAccessToken', '');
         }
     }
 };

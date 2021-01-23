@@ -32,13 +32,13 @@
 import { defineComponent, reactive, ref, unref, toRaw, getCurrentInstance } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import { Login } from '@/api/user';
+import { BaseUser } from '@/types/data';
 
 export default defineComponent({
     name: 'Login',
     setup () {
         const formRef = ref(null);
-        const userForm: Login = reactive({
+        const userForm: BaseUser = reactive({
             username: '',
             password: ''
         });

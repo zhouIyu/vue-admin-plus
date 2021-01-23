@@ -14,7 +14,7 @@ const systemRoutes: RouteRecordRaw = {
     children: [
         {
             path: 'user',
-            name: 'System-User',
+            name: 'System-Data',
             meta: {
                 title: '用户管理'
             },

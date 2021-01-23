@@ -1,18 +1,41 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ResponseData } from '@/types/response';
-import _ from 'lodash';
+import { ElMessage } from 'element-plus';
+import router from '@/router';
+import store from '@/store';
 
 const instance = axios.create({
-    baseURL: 'mock-server'
+    baseURL: 'http://localhost:3001'
+});
+
+const whiteList = ['/user/login'];
+
+instance.interceptors.request.use(config => {
+    if (!whiteList.includes(config.url as string)) {
+        config.headers.Authorization = store.getters['user/accessToken'];
+    }
+    return config;
+});
+
+instance.interceptors.response.use(response => {
+    const res = response.data as ResponseData;
+    if (res.code === 0) {
+        return response;
+    } else if (res.code === 4) {
+        const url = window.location.href;
+        store.dispatch('user/restoreToken').then(async () => {
+            await router.replace({ path: '/login', query: { redirect: url } });
+        });
+    }
+    ElMessage.error(res.msg);
+    return Promise.reject(res.msg);
 });
 
 const request = (config: AxiosRequestConfig): Promise<ResponseData> => {
-    const conf: AxiosRequestConfig = _.cloneDeep(config);
     return new Promise((resolve) => {
-        instance.request<any, AxiosResponse<ResponseData>>(conf)
-            .then((res) => {
-                resolve(res.data);
-            });
+        instance.request<any, AxiosResponse<ResponseData>>(config).then(res => {
+            resolve(res.data);
+        });
     });
 };
 

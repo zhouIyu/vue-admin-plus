@@ -42,11 +42,9 @@ export default defineComponent({
         const total = ref<number>(0);
         const fetchData = async () => {
             const result = await getRoleList();
-            if (result.code === 200) {
-                const { data } = result;
-                roleList.value = data.list;
-                total.value = data.total;
-            }
+            const { data } = result;
+            roleList.value = data.list;
+            total.value = data.total;
         };
         onMounted(async () => {
             await fetchData();
