@@ -17,14 +17,15 @@ export const createRole = (body: Role) => {
 
 export const removeRoleById = (id: string) => {
     return request({
-        url: '/' + id + Api.createRole,
+        url: '/role/' + id + Api.removeRoleById,
         method: 'DELETE'
     });
 };
 
-export const getRoleList = () => {
+export const getRoleList = (query: any) => {
     return request({
         url: Api.getRoleList,
-        method: 'get'
+        method: 'get',
+        params: query
     });
 };

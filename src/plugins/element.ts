@@ -23,7 +23,9 @@ import {
     ElRow,
     ElCol,
     ElTable,
-    ElTableColumn
+    ElTableColumn,
+    ElPopover,
+    ElPagination
 } from 'element-plus';
 import lang from 'element-plus/lib/locale/lang/zh-cn';
 import locale from 'element-plus/lib/locale';
@@ -51,7 +53,9 @@ const components = [
     ElRow,
     ElCol,
     ElTable,
-    ElTableColumn
+    ElTableColumn,
+    ElPopover,
+    ElPagination
 ];
 
 export default (app: App) => {
