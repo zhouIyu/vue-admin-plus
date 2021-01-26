@@ -1,5 +1,5 @@
 <template>
-    <el-dropdown>
+    <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
             <el-avatar> {{ username }} </el-avatar><i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, getCurrentInstance } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'VapUser',
@@ -40,12 +41,23 @@ export default defineComponent({
                 command: 'logout'
             }
         ];
+        const { ctx }: any = getCurrentInstance();
         const store = useStore();
         store.dispatch('user/getMyInfo');
         const username = computed(() => store.getters['user/username']);
+
+        const router = useRouter();
+        const handleCommand = async (command: string) => {
+            if (command === 'logout') {
+                await store.dispatch('user/logout');
+                await router.replace('/login');
+                ctx.$message.success('退出系统');
+            }
+        };
         return {
             menuConfig,
-            username
+            username,
+            handleCommand
         };
     }
 });

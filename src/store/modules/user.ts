@@ -53,11 +53,14 @@ const user: Module<UserStateType, any> = {
             commit('setUsername', data.username);
             commit('setRole', data.role);
         },
-        restoreToken ({ commit }) {
-            removeAccessToken();
+        async logout ({ dispatch }) {
+            await dispatch('restoreToken');
+        },
+        async restoreToken ({ commit }) {
             commit('setAccessToken', '');
             commit('setUsername', '');
             commit('setRole', {});
+            removeAccessToken();
         }
     }
 };
