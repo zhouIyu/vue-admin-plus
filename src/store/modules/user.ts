@@ -1,12 +1,15 @@
 import { Module } from 'vuex';
-import { login } from '@/api/user';
+import { getMyInfo, login } from '@/api/user';
 import { setAccessToken, getAccessToken, removeAccessToken } from '@/utils/token';
-import { BaseUser } from '@/types/data';
+import { BaseUser, Role } from '@/types/data';
 import { ResponseData } from '@/types/response';
+
+type RoleStateType = Role | {};
 
 const state = {
     accessToken: getAccessToken(),
     username: '',
+    role: {} as RoleStateType,
     avatar: ''
 };
 
@@ -16,7 +19,9 @@ const user: Module<UserStateType, any> = {
     namespaced: true,
     state,
     getters: {
-        accessToken: (state1) => state1.accessToken
+        accessToken: (state1) => state1.accessToken,
+        username: state1 => state1.username,
+        role: state1 => state1.role
     },
     mutations: {
         setAccessToken (state, token: string) {
@@ -25,6 +30,9 @@ const user: Module<UserStateType, any> = {
         },
         setUsername (state, username: string) {
             state.username = username;
+        },
+        setRole (state, role: RoleStateType) {
+            state.role = role;
         },
         setAvatar (state, avatar: string) {
             state.avatar = avatar;
@@ -40,9 +48,16 @@ const user: Module<UserStateType, any> = {
             }
             return false;
         },
+        async getMyInfo ({ commit }) {
+            const { data } = await getMyInfo();
+            commit('setUsername', data.username);
+            commit('setRole', data.role);
+        },
         restoreToken ({ commit }) {
             removeAccessToken();
             commit('setAccessToken', '');
+            commit('setUsername', '');
+            commit('setRole', {});
         }
     }
 };

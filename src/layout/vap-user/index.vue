@@ -1,7 +1,7 @@
 <template>
     <el-dropdown>
         <span class="el-dropdown-link">
-            <el-avatar> user </el-avatar><i class="el-icon-arrow-down el-icon--right"></i>
+            <el-avatar> {{ username }} </el-avatar><i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
             <el-dropdown-menu>
@@ -17,7 +17,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
     name: 'VapUser',
@@ -39,8 +40,12 @@ export default defineComponent({
                 command: 'logout'
             }
         ];
+        const store = useStore();
+        store.dispatch('user/getMyInfo');
+        const username = computed(() => store.getters['user/username']);
         return {
-            menuConfig
+            menuConfig,
+            username
         };
     }
 });
