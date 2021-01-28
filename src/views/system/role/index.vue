@@ -5,15 +5,7 @@
                     icon="el-icon-plus"
                     @click="addRole"/>
     </div>
-    <el-table
-        border
-        :data="roleList"
-        style="margin-bottom: 10px;">
-        <el-table-column v-for="column in columns"
-                         :key="column.prop"
-                         align="center"
-                         v-bind="{...column}">
-        </el-table-column>
+    <vap-table :columns="columns" :get-list-fn="getRoleList">
         <el-table-column label="操作"
                          align="center">
             <template #default="scope">
@@ -21,63 +13,38 @@
                             label="删除"
                             @click="removeRole(scope.row.id)"/>
                 <vap-button type="warning"
-                            label="编辑"/>
+                            label="编辑"
+                            @click="editRole(scope.row.id)"/>
             </template>
         </el-table-column>
-    </el-table>
-    <el-pagination :total="total"
-                   :page-size="limit"
-                   small
-                   hide-on-single-page
-                   :current-page="currentPage"/>
+    </vap-table>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue';
-import { getRoleList, removeRoleById } from '@/api/role.ts';
+import { defineComponent } from 'vue';
+import { getRoleList } from '@/api/role.ts';
 import VapButton from '@/components/vap-button.vue';
+import VapTable from '@/components/vap-table.vue';
 import columns from '@/views/system/role/columns';
-import useDataFormat from '@/hooks/useDataFormat';
 
 export default defineComponent({
     name: 'SystemUser',
-    components: { VapButton },
-    setup () {
-        const { ctx }: any = getCurrentInstance();
-        const roleList = ref([]);
-        const total = ref<number>(0);
-        const currentPage = ref<number>(1);
-        const limit = 10;
-        const { tableDateFormat } = useDataFormat();
-        const fetchData = async () => {
-            const offset = (currentPage.value - 1) * limit;
-            const result = await getRoleList({ limit, offset });
-            const { data } = result;
-            roleList.value = data.list;
-            total.value = data.total;
-        };
-        onMounted(async () => {
-            await fetchData();
-        });
-
+    components: { VapButton, VapTable },
+    setup: function () {
         const addRole = async () => {
             console.log(1);
         };
-
-        const removeRole = async (id: string) => {
-            await removeRoleById(id);
-            await fetchData();
-            ctx.$message.success('删除成功');
+        const editRole = async (id: string) => {
+            console.log(id);
         };
-
+        const removeRole = async (id: string) => {
+            console.log(id);
+        };
         return {
-            roleList,
-            total,
-            currentPage,
-            limit,
+            getRoleList,
             columns,
-            tableDateFormat,
             addRole,
+            editRole,
             removeRole
         };
     }
