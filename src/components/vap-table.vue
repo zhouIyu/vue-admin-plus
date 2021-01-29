@@ -2,6 +2,7 @@
     <el-table :data="list"
               border
               ref="tableRef"
+              style="margin-bottom: 10px;"
               stripe>
         <el-table-column v-for="column in columns"
                          :key="column.prop"
@@ -11,10 +12,11 @@
         <slot/>
     </el-table>
     <el-pagination @current-change="currentChange"
+                   style="text-align: right;"
                    :current-page="currentPage"
                    :page-sizes="[20, 40, 80, 100]"
                    :page-size="limit"
-                   layout="total, sizes, prev, pager, next, jumper"
+                   layout="total, prev, pager, next, jumper"
                    :total="total"
                    hide-on-single-page
                    background>
