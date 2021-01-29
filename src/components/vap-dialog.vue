@@ -1,14 +1,13 @@
 <template>
     <el-dialog
-        :title="title"
-        v-model:visible="dialogVisible"
-        width="30%"
-        :before-close="handleClose(done)">
+        v-bind="$attrs"
+        append-to-body
+        :model-value="visible">
         <slot/>
         <template v-slot:footer>
             <div class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                <vap-button label="取消" @click="onClose"/>
+                <vap-button type="primary" label="确定" @click="onOk"/>
             </div>
         </template>
     </el-dialog>
@@ -16,18 +15,38 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import VapButton from '@/components/vap-button.vue';
 
 export default defineComponent({
     name: 'VapDialog',
+    components: { VapButton },
+    emits: ['onOk', 'close'],
     props: {
-        title: {
-            type: String,
-            default: '提示'
+        visible: {
+            type: Boolean,
+            default: false
         }
+    },
+    setup (props, { emit }) {
+        const onClose = () => {
+            emit('close');
+        };
+
+        const onOk = () => {
+            emit('onOk');
+            onClose();
+        };
+
+        return {
+            onOk,
+            onClose
+        };
     }
 });
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+.el-overlay {
+    text-align: left !important;
+}
 </style>

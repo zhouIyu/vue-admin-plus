@@ -1,33 +1,20 @@
 <template>
     <el-button class="vap-button"
-               :size="size"
-               v-bind="{...buttonProps}">
+               size="small"
+               v-bind="$attrs">
         {{ label }}
     </el-button>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRaw } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'VapButton',
     props: {
-        type: {
-            type: String
-        },
         label: {
             type: String
-        },
-        icon: {
-            type: String
         }
-    },
-    setup (props) {
-        const buttonProps = toRaw(props);
-        return {
-            buttonProps,
-            size: 'small'
-        };
     }
 });
 </script>

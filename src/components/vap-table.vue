@@ -72,7 +72,8 @@ export default defineComponent({
             limit,
             list,
             total,
-            currentChange
+            currentChange,
+            fetchData
         };
     }
 });

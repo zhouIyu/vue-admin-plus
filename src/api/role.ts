@@ -4,20 +4,29 @@ import { Role } from '@/types/data';
 const Api = {
     createRole: '/role/create',
     getRoleList: '/role/list',
-    removeRoleById: '/remove'
+    updateRoleById: '/role/update/',
+    removeRoleById: '/role/remove/'
 };
 
 export const createRole = (body: Role) => {
     return request({
         url: Api.createRole,
-        method: 'GET',
+        method: 'POST',
+        data: body
+    });
+};
+
+export const updateRoleById = (id: string, body: Role) => {
+    return request({
+        url: Api.updateRoleById + id,
+        method: 'PUT',
         data: body
     });
 };
 
 export const removeRoleById = (id: string) => {
     return request({
-        url: '/role/' + id + Api.removeRoleById,
+        url: Api.removeRoleById + id,
         method: 'DELETE'
     });
 };
